@@ -31,7 +31,7 @@ export default function KanjiSVG({svgSrc }: KanjiSVGProps) {
   );
 }
 
-function toSVG(srcText: string, enabledStrokeOrder = false): string {
+function toSVG(srcText: string, enabledStrokeOrder = true): string {
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(srcText, "image/svg+xml");
     const svgElement = svgDoc.querySelector("svg")!;

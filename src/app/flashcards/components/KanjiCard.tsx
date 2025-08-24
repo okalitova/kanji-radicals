@@ -5,14 +5,14 @@ import styles from "./KanjiCard.module.css";
 import KanjiSVG from "./KanjiSVG";
 import CardBack from "./CardBack";
 import { mockKanji } from "@/mock/kanji後";
+import { KanjiInfo } from "@/types/KanjiInfo";
 
 type KanjiCardProps = {
-  kanji: string;
-  meaning: string;
-  svgSrc: string;
+  kanji: KanjiInfo;
 };
 
-export default function KanjiCard({ kanji, meaning, svgSrc }: KanjiCardProps) {
+export default function KanjiCard({kanji}: KanjiCardProps) {
+  const svgSrc = `/kanji/${kanji.character}.svg`;
   const [flipped, setFlipped] = useState(false);
 
   return (

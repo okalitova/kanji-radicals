@@ -1,5 +1,4 @@
-// mock/kanji後.ts
-import { KanjiInfo } from "../types/KanjiInfo";
+import { KanjiInfo } from "@/types/KanjiInfo";
 
 export const mockKanji: KanjiInfo = {
   character: "後",
