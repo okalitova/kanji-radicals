@@ -1,0 +1,33 @@
+.header {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.header .kanji {
+    font-size: 5rem;
+    color: var(--on-surface);
+}
+
+.header .meaning {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    font-size: 1.25rem;
+}
+
+.jlpt {
+    margin-top: 1rem;
+    padding: 0.25rem 0.5rem;
+    background-color: var(--container-secondary);
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    color: var(--on-container-secondary);
+}
