@@ -34,3 +34,30 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+# Prerequisities
+
+In order to use the 
+```
+npm run dev
+```
+
+one needs to have Node version >= 20.
+
+```
+# Install nvm if you don’t have it
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.6/install.sh | bash
+source ~/.bashrc  # or ~/.zshrc
+
+# Install Node 20
+nvm install 20
+
+# Use Node 20
+nvm use 20
+
+# Make it default
+nvm alias default 20
+
+# Check version
+node -v
+```
