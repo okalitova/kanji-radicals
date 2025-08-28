@@ -4,14 +4,16 @@ import { useState } from "react";
 import styles from "./KanjiCard.module.css";
 import KanjiSVG from "./KanjiSVG";
 import KanjiBack from "./KanjiBack";
-import { mockKanji } from "@/mock/kanji後";
+import RadicalBack from "./RadicalBack";
 import { KanjiInfo } from "@/types/KanjiInfo";
+import { RadicalInfo } from "@/types/RadicalInfo";
 
 type KanjiCardProps = {
-  kanji: KanjiInfo;
+  kanji: KanjiInfo,
+  radical: RadicalInfo,
 };
 
-export default function KanjiCard({kanji}: KanjiCardProps) {
+export default function KanjiCard({kanji, radical}: KanjiCardProps) {
   const svgSrc = `/kanji/${kanji.character}.svg`;
   const [flipped, setFlipped] = useState(false);
 
@@ -28,7 +30,7 @@ export default function KanjiCard({kanji}: KanjiCardProps) {
 
         {/* Back: Meaning */}
         <div className={styles.back}>
-          <KanjiBack kanji={kanji} />
+          <RadicalBack radical={radical} />
         </div>
       </div>
     </div>

@@ -1,0 +1,23 @@
+.header {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.header .radical {
+    font-size: 5rem;
+    color: var(--on-surface);
+}
+
+.header .meaning {
+    font-size: 1.5rem;
+    margin-top: 0.5rem;;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    font-size: 1.25rem;
+}
