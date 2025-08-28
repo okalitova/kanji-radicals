@@ -1,13 +1,13 @@
 "use client";
 
-import styles from "./CardBack.module.css";
+import styles from "./KanjiBack.module.css";
 import { KanjiInfo } from "@/types/KanjiInfo";
 
-type CardBackProps = {
+type KanjiBackProps = {
   kanji: KanjiInfo;
 };
 
-export default function CardBack({kanji}: CardBackProps) {
+export default function KanjiBack({kanji}: KanjiBackProps) {
   return (
     <>
       <div className={styles.header}>

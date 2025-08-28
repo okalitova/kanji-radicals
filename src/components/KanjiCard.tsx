@@ -3,7 +3,7 @@
 import { useState } from "react";
 import styles from "./KanjiCard.module.css";
 import KanjiSVG from "./KanjiSVG";
-import CardBack from "./CardBack";
+import KanjiBack from "./KanjiBack";
 import { mockKanji } from "@/mock/kanji後";
 import { KanjiInfo } from "@/types/KanjiInfo";
 
@@ -28,7 +28,7 @@ export default function KanjiCard({kanji}: KanjiCardProps) {
 
         {/* Back: Meaning */}
         <div className={styles.back}>
-          <CardBack kanji={mockKanji} />
+          <KanjiBack kanji={kanji} />
         </div>
       </div>
     </div>

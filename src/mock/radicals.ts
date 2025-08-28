@@ -3,21 +3,21 @@ import {RadicalInfo} from "@/types/RadicalInfo";
 export const radicalThread: RadicalInfo = {
   character: "幺",
   meaning: "thread",
-  svgId: "kvg:幺",
+  svgId: "幺",
   relatedKanji: ["後", "么", "幼"]
 };
 
 export const radicalHand: RadicalInfo = {
   character: "夂",
   meaning: "hand",
-  svgId: "kvg:夂",
+  svgId: "夂",
   relatedKanji: ["後", "冬"]
 };
 
 export const radicalGo: RadicalInfo = {
   character: "彳",
   meaning: "step",
-  svgId: "kvg:",
+  svgId: "彳",
   relatedKanji: ["後", "待","往"],
 };
 
