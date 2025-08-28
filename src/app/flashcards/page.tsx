@@ -1,5 +1,5 @@
 import { KanjiInfo } from "@/types/KanjiInfo";
-import KanjiCard from "./components/KanjiCard";
+import KanjiCard from "@/components/KanjiCard";
 import { mockKanji } from "@/mock/kanji後";
 
 type FlashcardData = {
