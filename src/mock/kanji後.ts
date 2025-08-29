@@ -1,6 +1,7 @@
 import { KanjiInfo } from "@/types/KanjiInfo";
 
 export const mockKanji: KanjiInfo = {
+  svgId: "05f8c",
   character: "後",
   meaning: ["after", "back"],
   onyomi: ["ゴ", "コウ"],

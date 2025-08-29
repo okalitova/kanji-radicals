@@ -14,7 +14,7 @@ type KanjiCardProps = {
 };
 
 export default function KanjiCard({kanji}: KanjiCardProps) {
-  const svgSrc = `/kanji/${kanji.character}.svg`;
+  const svgSrc = `/kanji/${kanji.svgId}.svg`;
   const connectedRadicals = radicalDB;
   const [flipped, setFlipped] = useState(false);
   const [radical, setRadical] = useState<string>();

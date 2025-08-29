@@ -10,7 +10,6 @@ type KanjiSVGProps = {
 
 export default function KanjiSVG({svgSrc, onRadicalClick}: KanjiSVGProps) {
   const [svgContent, setSvgContent] = useState<string | null>(null);
-  const [flipped, setFlipped] = useState(false);
   const containerRef = useRef<HTMLDivElement | null>(null);;
 
   useEffect(() => {
