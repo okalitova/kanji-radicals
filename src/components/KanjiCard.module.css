@@ -5,6 +5,7 @@
   height: 700px;
   perspective: 1000px;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .inner {
