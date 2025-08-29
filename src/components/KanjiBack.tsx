@@ -23,7 +23,7 @@ export default function KanjiBack({kanji}: KanjiBackProps) {
         <ul className="list-disc pl-5">
           {kanji.examples.map((ex, i) => (
             <li key={i}>
-              <span className="font-bold">{ex.word}</span> ({ex.reading}) – {ex.meaning}
+              <span className="font-bold">{ex.word}</span> – {ex.meaning}
             </li>
           ))}
         </ul>
