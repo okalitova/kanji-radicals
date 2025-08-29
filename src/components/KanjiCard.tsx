@@ -21,31 +21,33 @@ export default function KanjiCard({kanji}: KanjiCardProps) {
   const [radical, setRadical] = useState<string>();
 
   const onRadicalClicked = (radicalName: string) => {
-    setRadical(radicalName);
-    flipCard();
+    showRadicalBack(radicalName);
   };
 
-  const flipCard = () => {
-    // Clean up to the initial state when flipping back.
-    if (flipped && radical) {
-      setRadical("");
-    }
-    setFlipped(!flipped);
+  const showRadicalBack = (radicalName: string) => {
+    setRadical(radicalName);
+    setFlipped(true);
+  };
+
+  const showKanjiBack = () => {
+    setRadical("");
+    setFlipped(true);
+  };
+
+  const showFront = () => {
+    setFlipped(false);
   }
 
   return (
-    <div
-      className={`${styles.card}`}
-      onClick={flipCard}
-    >
+    <div className={`${styles.card}`}>
       <div className={`${styles.inner} ${flipped ? styles.flipped : ""}`}>
         {/* Front: Kanji SVG */}
-        <div className={styles.front}>
+        <div className={styles.front} onClick={showKanjiBack}>
             <KanjiSVG svgSrc={svgSrc} onRadicalClick={onRadicalClicked}/>
         </div>
 
         {/* Back: Meaning */}
-        <div className={styles.back}>
+        <div className={styles.back} onClick={showFront}>
           {radical ? 
             <RadicalBack radical={radicalDB[radical!]} /> :
             <KanjiBack kanji={kanji}/>
