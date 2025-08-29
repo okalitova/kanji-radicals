@@ -61,3 +61,8 @@ nvm alias default 20
 # Check version
 node -v
 ```
+
+## Sources
+
+<!-- TODO: Add proper copyright info, license. -->
+For the SVGs The KanjiVG was used: https://kanjivg.tagaini.net/.
