@@ -37,10 +37,6 @@ export default function KanjiSVG({svgSrc, onRadicalClick}: KanjiSVGProps) {
     // Stable click handler for adding/removal.
     const handleClick = (event: Event) => {
       const radical = event.currentTarget as SVGElement;
-      console.log(styles.radicalPressed);
-      console.log(radical.classList);
-      radical.classList.add(styles.radicalPressed);
-      console.log(radical.classList);
       const radicalName = radical.getAttribute("kvg:element");
       if (radicalName) {
         onRadicalClick?.(radicalName);
