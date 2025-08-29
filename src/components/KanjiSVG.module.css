@@ -22,3 +22,9 @@
     stroke: red;
     stroke-width: 5;
 }
+
+/*`.kanji g g` is needed to filter out the kanji itself.*/
+.kanji g g g[kvg\:element]:active path {
+    stroke: green;
+    stroke-width: 5;
+}
