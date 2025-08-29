@@ -1,12 +1,11 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import styles from "./KanjiCard.module.css";
 import KanjiSVG from "./KanjiSVG";
 import KanjiBack from "./KanjiBack";
 import RadicalBack from "./RadicalBack";
 import { KanjiInfo } from "@/types/KanjiInfo";
-import { RadicalInfo } from "@/types/RadicalInfo";
 import { radicalDB } from "@/mock/radicals";
 
 
@@ -19,10 +18,6 @@ export default function KanjiCard({kanji}: KanjiCardProps) {
   const connectedRadicals = radicalDB;
   const [flipped, setFlipped] = useState(false);
   const [radical, setRadical] = useState<string>();
-
-  const onRadicalClicked = (radicalName: string) => {
-    showRadicalBack(radicalName);
-  };
 
   const showRadicalBack = (radicalName: string) => {
     setRadical(radicalName);
@@ -43,7 +38,7 @@ export default function KanjiCard({kanji}: KanjiCardProps) {
       <div className={`${styles.inner} ${flipped ? styles.flipped : ""}`}>
         {/* Front: Kanji SVG */}
         <div className={styles.front} onClick={showKanjiBack}>
-            <KanjiSVG svgSrc={svgSrc} onRadicalClick={onRadicalClicked}/>
+            <KanjiSVG svgSrc={svgSrc} onRadicalClick={showRadicalBack}/>
         </div>
 
         {/* Back: Meaning */}
