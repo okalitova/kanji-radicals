@@ -18,7 +18,7 @@ export class KanjiInfo {
     this.character = character;
   }
 
-  async populateFromIndex(): Promise<this> {
+  async populateFromIndex() {
     const res = await fetch(`/kvg-index.json`);
     // Read and parse JSON
     const raw = await res.text();
@@ -27,13 +27,11 @@ export class KanjiInfo {
     // Now `data` is typed as `any`, but you can add a type:
     type SvgMap = Record<string, string[]>;
     const svgs: SvgMap = data;
-    this.svgId = svgs[this.character][0].replace(".svg", "");
-
-    return this;
+    this.svgId = svgs[this.character][0].replace("-Kaisho", "").replace(".svg", "");
   }
 
   // Fetch and populate Kanji info
-  async populateFromKanjiAlive(): Promise<this> {
+  async populateFromKanjiAlive() {
     const url = `https://kanjialive-api.p.rapidapi.com/api/public/kanji/${encodeURIComponent(
       this.character
     )}`;
@@ -65,7 +63,5 @@ export class KanjiInfo {
           meaning: ex.meaning.english,
         }))
       : [];
-    
-    return this;
   }
 }
