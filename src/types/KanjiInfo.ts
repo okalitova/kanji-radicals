@@ -27,7 +27,10 @@ export class KanjiInfo {
     // Now `data` is typed as `any`, but you can add a type:
     type SvgMap = Record<string, string[]>;
     const svgs: SvgMap = data;
-    this.svgId = svgs[this.character][0].replace("-Kaisho", "").replace(".svg", "");
+    this.svgId = svgs[this.character][0]
+      .replace("-Kaisho", "")
+      .replace("-Insatsu", "")
+      .replace(".svg", "");
   }
 
   // Fetch and populate Kanji info

@@ -1,0 +1,8 @@
+.miniKanjiCard {
+    width: 120px;
+    height: 120px;
+    border: black 2px solid;
+    border-radius: 8px;
+    background-color: var(--surface);
+    color: var(--on-surface);
+}
