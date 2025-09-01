@@ -21,7 +21,8 @@
 }
 
 .front,
-.back {
+.back,
+.empty {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -33,7 +34,8 @@
   border: 2px solid var(--surface-border);
 }
 
-.front {
+.front,
+.empty {
   background-color: var(--surface-higher);
   color: var(--on-surface-higher);
 }

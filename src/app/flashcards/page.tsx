@@ -2,19 +2,22 @@
 
 import { KanjiInfo } from "@/types/KanjiInfo";
 import KanjiCard from "@/components/KanjiCard";
-import { mockKanji } from "@/mock/kanji後";
 import { useState, useEffect } from "react";
 
 export default function FlashcardsPage() {
   const [kanji, setKanji] = useState('後')
-  const [kanjiInfo, setKanjiInfo] = useState<KanjiInfo>(mockKanji);
+  const [kanjiInfo, setKanjiInfo] = useState<KanjiInfo|null>(null);
 
   useEffect(() => {
-    var newKanjiInfo = new KanjiInfo(kanji);
-    newKanjiInfo.populateFromKanjiAlive().then(() => {
-      setKanjiInfo(newKanjiInfo)
-      console.log(newKanjiInfo)
-    });
+    async function fetchKanjiInfo() {
+      const newKanjiInfo = new KanjiInfo(kanji);
+      await newKanjiInfo.populateFromKanjiAlive();
+      await newKanjiInfo.populateFromIndex();
+
+      setKanjiInfo(newKanjiInfo);
+    }
+    
+    fetchKanjiInfo();
   }, [kanji])
 
   return (

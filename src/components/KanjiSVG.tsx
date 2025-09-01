@@ -13,6 +13,7 @@ export default function KanjiSVG({svgSrc, onRadicalClick}: KanjiSVGProps) {
   const containerRef = useRef<HTMLDivElement | null>(null);;
 
   useEffect(() => {
+    console.log('start fetching the svg: ', svgSrc)
     fetch(`${svgSrc}`)
       .then((res) => {
         if (!res.ok) throw new Error("SVG not found: " + svgSrc);

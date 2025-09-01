@@ -6,16 +6,13 @@ import KanjiSVG from "./KanjiSVG";
 import KanjiBack from "./KanjiBack";
 import RadicalBack from "./RadicalBack";
 import { KanjiInfo } from "@/types/KanjiInfo";
-import { radicalDB } from "@/mock/radicals";
 
 
 type KanjiCardProps = {
-  kanji: KanjiInfo,
+  kanji: KanjiInfo | null,
 };
 
 export default function KanjiCard({kanji}: KanjiCardProps) {
-  const svgSrc = `/kanji/${kanji.svgId}.svg`;
-  const connectedRadicals = radicalDB;
   const [flipped, setFlipped] = useState(false);
   const [radical, setRadical] = useState<string>();
 
@@ -31,24 +28,27 @@ export default function KanjiCard({kanji}: KanjiCardProps) {
 
   const showFront = () => {
     setFlipped(false);
-  }
+  };
 
   return (
     <div className={`${styles.card}`}>
+      {kanji?
       <div className={`${styles.inner} ${flipped ? styles.flipped : ""}`}>
-        {/* Front: Kanji SVG */}
-        <div className={styles.front} onClick={showKanjiBack}>
-            <KanjiSVG svgSrc={svgSrc} onRadicalClick={showRadicalBack}/>
-        </div>
+          {/* Front: Kanji SVG */}
+          <div className={styles.front} onClick={showKanjiBack}>
+                <KanjiSVG svgSrc={`/kanji/${kanji.svgId}.svg`} onRadicalClick={showRadicalBack}/>
+          </div>
 
-        {/* Back: Meaning */}
-        <div className={styles.back} onClick={showFront}>
-          {radical ? 
-            <RadicalBack radical={radicalDB[radical!]} /> :
-            <KanjiBack kanji={kanji}/>
-          }
-        </div>
+          {/* Back: Meaning */}
+          <div className={styles.back} onClick={showFront}>
+            {radical ? 
+              <RadicalBack radical={radical} /> :
+              <KanjiBack kanji={kanji!}/>
+            }
+          </div>
       </div>
+      :<div className={styles.empty}/>
+      }
     </div>
   );
 }

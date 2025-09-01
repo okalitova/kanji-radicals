@@ -12,14 +12,28 @@ export class KanjiInfo {
   examples: Example[] = [];
   jlpt?: number;
   // From the KanjiVG
-  svgId: string = "05f8c";
+  svgId: string = "";
 
   constructor(character: string) {
     this.character = character;
   }
 
+  async populateFromIndex(): Promise<this> {
+    const res = await fetch(`/kvg-index.json`);
+    // Read and parse JSON
+    const raw = await res.text();
+    const data = JSON.parse(raw);
+
+    // Now `data` is typed as `any`, but you can add a type:
+    type SvgMap = Record<string, string[]>;
+    const svgs: SvgMap = data;
+    this.svgId = svgs[this.character][0].replace(".svg", "");
+
+    return this;
+  }
+
   // Fetch and populate Kanji info
-  async populateFromKanjiAlive() {
+  async populateFromKanjiAlive(): Promise<this> {
     const url = `https://kanjialive-api.p.rapidapi.com/api/public/kanji/${encodeURIComponent(
       this.character
     )}`;
@@ -51,5 +65,7 @@ export class KanjiInfo {
           meaning: ex.meaning.english,
         }))
       : [];
+    
+    return this;
   }
 }
