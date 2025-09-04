@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./KanjiCard.module.css";
 import KanjiSVG from "./KanjiSVG";
 import KanjiBack from "./KanjiBack";
@@ -15,6 +15,10 @@ type KanjiCardProps = {
 export default function KanjiCard({kanji}: KanjiCardProps) {
   const [flipped, setFlipped] = useState(false);
   const [radical, setRadical] = useState<string>();
+
+  useEffect(() => {
+    showFront();
+  }, [kanji])
 
   const showRadicalBack = (radicalName: string) => {
     setRadical(radicalName);

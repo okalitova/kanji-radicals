@@ -3,6 +3,7 @@
 import { KanjiInfo } from "@/types/KanjiInfo";
 import KanjiCard from "@/components/KanjiCard";
 import { useState, useEffect } from "react";
+import { motion, useAnimation } from "framer-motion";
 
 const mockAlgo: string[] = [
   "会","同","事","自","社","者","地","方","法","度",
@@ -22,48 +23,92 @@ export default function FlashcardsPage() {
   const [i, setI] = useState(0);
   const [kanji, setKanji] = useState('会');
   const [kanjiInfo, setKanjiInfo] = useState<KanjiInfo|null>(null);
+  const [nextkanjiInfo, setNextKanjiInfo] = useState<KanjiInfo|null>(null);
+  const [didDrag, setDidDrag] = useState(false);
+  const controls = useAnimation();
+
+  const getNextIndex = () => {return (i + 1) % mockAlgo.length;}
 
   useEffect(() => {
     async function fetchKanjiInfo() {
-      const newKanjiInfo = new KanjiInfo(kanji);
-      await newKanjiInfo.populateFromKanjiAlive();
-      await newKanjiInfo.populateFromIndex();
+      if (nextkanjiInfo) {
+        setKanjiInfo(nextkanjiInfo);
+      } else {
+        const newKanjiInfo = new KanjiInfo(kanji);
+        await newKanjiInfo.populateFromKanjiAlive();
+        await newKanjiInfo.populateFromIndex();
+        setKanjiInfo(newKanjiInfo);
+      }
 
-      setKanjiInfo(newKanjiInfo);
+      // Preload the next kanji;
+      const nextIndex = getNextIndex();
+      const upcomingKanji = mockAlgo[nextIndex];
+      const preloadInfo = new KanjiInfo(upcomingKanji);
+      preloadInfo.populateFromKanjiAlive();
+      preloadInfo.populateFromIndex();
+      setNextKanjiInfo(preloadInfo);
+
+      console.log('Current kanji: ', kanji);
+      console.log('Upcoming kanji: ', upcomingKanji);
     }
-    
     fetchKanjiInfo();
   }, [kanji]);
 
   const loadNextKanji = () => {
-    setI((i + 1) % 100);
-    setKanji(mockAlgo[i]);
+    setKanjiInfo(null);
+
+    const nextIndex = getNextIndex();
+    setI(nextIndex);
+    setKanji(mockAlgo[nextIndex]);
+    setKanjiInfo(nextkanjiInfo);
+    setNextKanjiInfo(null);
+  };
+
+  const handleDragStart = () => {
+    setDidDrag(false);
+  };
+
+  const handleDragEnd = async (_: any, info: any) => {
+    const offset = info.offset.x; // horizontal movement
+    const velocity = info.velocity.x;
+
+    // swipe threshold
+    if (Math.abs(offset) > 100 || Math.abs(velocity) > 500) {
+      setDidDrag(true);
+      // animate off screen
+      await controls.start({ x: offset > 0 ? 500 : -500, opacity: 0 });
+
+      // reset card in center
+      loadNextKanji();
+      controls.set({ x: 0, opacity: 1 });
+    } else {
+      // snap back to center if not swiped enough
+      controls.start({ x: 0 });
+    }
   };
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center">
       <h1 className="text-3xl font-bold mb-6">Kanji Flashcards</h1>
       <div className="flex items-center space-x-4">
-          <KanjiCard kanji={kanjiInfo}/>
-
-          {/* Next button */}
-          <button
-            onClick={loadNextKanji} // your handler
-            className="p-2 rounded-full hover:bg-gray-200 active:bg-gray-300 transition-colors"
-            aria-label="Next Kanji"
+          <motion.div
+            key={kanji}
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+            animate={controls}
+            // className="cursor-grab active:cursor-grabbing"
+            onClickCapture={(e) => {
+              if (didDrag) {
+                e.stopPropagation(); // prevent KanjiCard onClick
+                e.preventDefault();
+                setDidDrag(false);   // reset
+              }
+            }}
           >
-            {/* Right arrow SVG */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6 text-gray-700"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth={2}
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
+            <KanjiCard kanji={kanjiInfo} />
+          </motion.div>
       </div>
     </div>
   );
