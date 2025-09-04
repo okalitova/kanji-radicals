@@ -8,7 +8,7 @@ import { KanjiInfo } from "@/types/KanjiInfo";
 
 type RadicalBackProps = {
   radical: string;
-  handleKanjiChange: (kanji: string) => void;
+  handleKanjiChange: (kanji: KanjiInfo) => void;
 };
 
 export default function RadicalBack({radical, handleKanjiChange}: RadicalBackProps) {
@@ -50,12 +50,12 @@ export default function RadicalBack({radical, handleKanjiChange}: RadicalBackPro
       <div className={styles.details}>
             {relatedKanji?.map((kanji, i) => (
                 <MiniKanjiCard
-                    key={i}
+                    key={`${kanji.character}-${radical}`}
                     radical={radical}
                     svgSrc={`/kanji/${kanji.svgId}.svg`}
                     onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
                         e.stopPropagation();
-                        handleKanjiChange(kanji.character);
+                        handleKanjiChange(kanji);
                     }}
                 />
             ))}

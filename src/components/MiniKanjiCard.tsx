@@ -19,21 +19,10 @@ export default function MiniKanjiCard({radical, svgSrc, onClick}: MiniKanjiCardP
         if (!res.ok) throw new Error("SVG not found: " + svgSrc);
         return res.text();
       })
-      .then(toSVG)
+      .then((srcText) => toSVG(srcText, radical))
       .then(setSvgContent)
       .catch((err) => console.error(err));
   }, [svgSrc]);
-
-  // Highligting the radical in the kanji.
-  useEffect(() => {
-    if (!containerRef.current) return;
-
-    const radicalElement = containerRef.current.querySelector(`[kvg\\:element="${radical}"]`)!;
-    const strokes = radicalElement.querySelectorAll("path");
-    strokes.forEach((stroke) => {
-        stroke.setAttribute("stroke", "red");
-    });
-  }, [svgContent, containerRef]);
 
   return (
     <div className={styles.miniKanjiCard} onClick={onClick}>
@@ -48,15 +37,28 @@ export default function MiniKanjiCard({radical, svgSrc, onClick}: MiniKanjiCardP
     );
 };
 
-function toSVG(srcText: string, enabledStrokeOrder = false): string {
+function toSVG(srcText: string, radical: string): string {
     const parser = new DOMParser();
     const svgDoc = parser.parseFromString(srcText, "image/svg+xml");
     const svgElement = svgDoc.querySelector("svg")!;
 
-    // TODO: Handle the stroke order toggle via a prop and classes.
-    if (!enabledStrokeOrder) {
-        svgElement.querySelectorAll('[id^="kvg:StrokeNumbers_"]')
-            .forEach((el) => el.remove());
+    svgElement.querySelectorAll('[id^="kvg:StrokeNumbers_"]')
+        .forEach((el) => el.remove());
+
+    // Find the radical element and add a class or attribute for styling
+    let radicalElement = null;
+    const elements = svgElement.querySelectorAll('*');
+    for (const el of elements) {
+        if (el.getAttribute('kvg:element') === radical) {
+            radicalElement = el;
+            break;
+        }
+    }
+    if (radicalElement) {
+        const strokes = radicalElement.querySelectorAll("path");
+        strokes.forEach((stroke) => {
+            stroke.setAttribute("stroke", "red");
+        });
     }
 
     return new XMLSerializer().serializeToString(svgElement);
