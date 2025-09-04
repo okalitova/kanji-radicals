@@ -31,19 +31,17 @@ export default function FlashcardsPage() {
 
   useEffect(() => {
     setDidDrag(false);
-    
+
     async function fetchKanjiInfo() {
       const newKanjiInfo = new KanjiInfo(kanji);
-      await newKanjiInfo.populateFromKanjiAlive();
-      await newKanjiInfo.populateFromIndex();
+      await newKanjiInfo.fetch();
       setKanjiInfo(newKanjiInfo);
 
       // Preload the next kanji;
       const nextIndex = getNextIndex();
       const upcomingKanji = mockAlgo[nextIndex];
       const preloadInfo = new KanjiInfo(upcomingKanji);
-      preloadInfo.populateFromKanjiAlive();
-      preloadInfo.populateFromIndex();
+      await preloadInfo.fetch();
       setNextKanjiInfo(preloadInfo);
     }
     fetchKanjiInfo();

@@ -6,9 +6,10 @@ import styles from "./MiniKanjiCard.module.css";
 type MiniKanjiCardProps = {
   radical: string;
   svgSrc: string;
+  onClick: (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 };
 
-export default function MiniKanjiCard({radical, svgSrc}: MiniKanjiCardProps) {
+export default function MiniKanjiCard({radical, svgSrc, onClick}: MiniKanjiCardProps) {
   const [svgContent, setSvgContent] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);;
 
@@ -35,12 +36,12 @@ export default function MiniKanjiCard({radical, svgSrc}: MiniKanjiCardProps) {
   }, [svgContent, containerRef]);
 
   return (
-    <div className={styles.miniKanjiCard}>
+    <div className={styles.miniKanjiCard} onClick={onClick}>
         {svgContent ? (
             <div 
                 className={styles.kanji}
                 ref={containerRef}
-                dangerouslySetInnerHTML={{ __html: svgContent! }} 
+                dangerouslySetInnerHTML={{ __html: svgContent! }}
             />
         ) : ("Loading...")}
     </div>

@@ -1,18 +1,19 @@
 "use client";
 
-import { MiniKanji } from "@/types/MiniKanji";
 import styles from "./RadicalBack.module.css";
 import { RadicalInfo } from "@/types/RadicalInfo";
 import { useEffect, useState } from "react";
 import MiniKanjiCard from "./MiniKanjiCard";
+import { KanjiInfo } from "@/types/KanjiInfo";
 
 type RadicalBackProps = {
   radical: string;
+  handleKanjiChange: (kanji: string) => void;
 };
 
-export default function RadicalBack({radical}: RadicalBackProps) {
+export default function RadicalBack({radical, handleKanjiChange}: RadicalBackProps) {
   const [radicalInfo, setRadicalInfo] = useState<RadicalInfo|null>();
-  const [relatedKanji, setRelatedKanji] = useState<MiniKanji[]>();
+  const [relatedKanji, setRelatedKanji] = useState<KanjiInfo[]>();
 
   useEffect(() => {
     const radicalInfo = new RadicalInfo(radical);
@@ -28,8 +29,8 @@ export default function RadicalBack({radical}: RadicalBackProps) {
         const firstKanji = radicalInfo.relatedKanji?.slice(0, 10) ?? [];   
         const miniKanjis = await Promise.all(
             firstKanji.map(async (kanji) => {
-                const miniKanji = new MiniKanji(kanji);
-                await miniKanji.populateFromIndex(); // assume this returns a Promise
+                const miniKanji = new KanjiInfo(kanji);
+                await miniKanji.fetch(); // assume this returns a Promise
                 return miniKanji;
             })
         );
@@ -48,7 +49,15 @@ export default function RadicalBack({radical}: RadicalBackProps) {
       <p><b>Kanji with the radical:</b></p>
       <div className={styles.details}>
             {relatedKanji?.map((kanji, i) => (
-                <MiniKanjiCard key={i} radical={radical} svgSrc={`/kanji/${kanji.svgId}.svg`} />
+                <MiniKanjiCard
+                    key={i}
+                    radical={radical}
+                    svgSrc={`/kanji/${kanji.svgId}.svg`}
+                    onClick={(e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+                        e.stopPropagation();
+                        handleKanjiChange(kanji.character);
+                    }}
+                />
             ))}
       </div>
     </>
