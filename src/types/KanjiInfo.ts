@@ -37,10 +37,7 @@ export async function populateFromIndex(character: string): Promise<string> {
   // Now `data` is typed as `any`, but you can add a type:
   type SvgMap = Record<string, string[]>;
   const svgs: SvgMap = data;
-  const svgId = svgs[character][0]
-    .replace("-Kaisho", "")
-    .replace("-Insatsu", "")
-    .replace(".svg", "");
+  const svgId = svgs[character][0].replace(".svg", "").split("-")[0];
   return svgId;
 }
 

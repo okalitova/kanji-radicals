@@ -26,11 +26,8 @@ export default function KanjiCard({kanji}: KanjiCardProps) {
   //   2. The related kanji are shown on the back.
   //   3. The user selects one of those kanji to view.
   // `currentKanji` is updated with the selected kanji, while `kanji` remains the original read-only prop.
-  const setNewKanji = async (newKanji: string) => {
-    const newKanjiInfo = new KanjiInfo(newKanji);
-    await newKanjiInfo.fetch();
-
-    setCurrentKanji(newKanjiInfo);
+  const setNewKanji = async (newKanji: KanjiInfo) => {
+    setCurrentKanji(newKanji);
     showFront();
   };
 
