@@ -36,8 +36,12 @@ for filename in os.listdir(input_folder):
         for radical in radicals[1:]:
             radical = radical.attrib.get("{http://kanjivg.tagaini.net}element")
             if radical not in radical_map:
-                radical_map[radical] = {1: [], 2: [], 3: [], 4: [], 5: []}
-            radical_map[radical][jlpt_level].append(kanji)
+                radical_map[radical] = {1: set(), 2: set(), 3: set(), 4: set(), 5: set()}
+            radical_map[radical][jlpt_level].add(kanji)
+    
+for radical in radical_map:
+    for level in (1, 2, 3, 4, 5):
+        radical_map[radical][level] = list(radical_map[radical][level])
 
 # save as JSON
 with open(output_file, "w", encoding="utf-8") as f:
