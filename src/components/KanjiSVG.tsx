@@ -52,13 +52,12 @@ export default function KanjiSVG({svgSrc, onRadicalClick}: KanjiSVGProps) {
   }, [svgContent, onRadicalClick]);
 
   return (
-    svgContent ? (
-        <div 
-            className={styles.kanji}
-            ref={containerRef}
-            dangerouslySetInnerHTML={{ __html: svgContent }} 
-        />
-    ) : ("Loading...")
+    svgContent &&
+      <div 
+          className={styles.kanji}
+          ref={containerRef}
+          dangerouslySetInnerHTML={{ __html: svgContent }} 
+      />
   );
 }
 
