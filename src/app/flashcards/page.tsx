@@ -30,15 +30,13 @@ export default function FlashcardsPage() {
   const getNextIndex = () => {return (i + 1) % mockAlgo.length;}
 
   useEffect(() => {
+    setDidDrag(false);
+    
     async function fetchKanjiInfo() {
-      if (nextkanjiInfo) {
-        setKanjiInfo(nextkanjiInfo);
-      } else {
-        const newKanjiInfo = new KanjiInfo(kanji);
-        await newKanjiInfo.populateFromKanjiAlive();
-        await newKanjiInfo.populateFromIndex();
-        setKanjiInfo(newKanjiInfo);
-      }
+      const newKanjiInfo = new KanjiInfo(kanji);
+      await newKanjiInfo.populateFromKanjiAlive();
+      await newKanjiInfo.populateFromIndex();
+      setKanjiInfo(newKanjiInfo);
 
       // Preload the next kanji;
       const nextIndex = getNextIndex();
@@ -47,16 +45,11 @@ export default function FlashcardsPage() {
       preloadInfo.populateFromKanjiAlive();
       preloadInfo.populateFromIndex();
       setNextKanjiInfo(preloadInfo);
-
-      console.log('Current kanji: ', kanji);
-      console.log('Upcoming kanji: ', upcomingKanji);
     }
     fetchKanjiInfo();
   }, [kanji]);
 
   const loadNextKanji = () => {
-    setKanjiInfo(null);
-
     const nextIndex = getNextIndex();
     setI(nextIndex);
     setKanji(mockAlgo[nextIndex]);
@@ -98,7 +91,6 @@ export default function FlashcardsPage() {
             onDragStart={handleDragStart}
             onDragEnd={handleDragEnd}
             animate={controls}
-            // className="cursor-grab active:cursor-grabbing"
             onClickCapture={(e) => {
               if (didDrag) {
                 e.stopPropagation(); // prevent KanjiCard onClick
